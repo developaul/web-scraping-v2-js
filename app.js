@@ -34,6 +34,17 @@ const autoscrollToElement = async function (cssSelector) {
     });
 };
 
+const goNextPage = (linksProfiles) => {
+
+    const [linkProfile, ...rest] = linksProfiles;
+    window.location.href = linkProfile;
+
+    // Save new LinksProfiles
+    window.localStorage.setItem('linksProfiles', JSON.stringify(rest));
+
+}
+
+
 const createPopup = () => {
     const styleDiv = "position: fixed;z-index: 2000;width:100%; top: 0px;left: 0px;overflow: visible;display: flex;align-items: flex-end;background-color: lightgray;font-size: 10px;padding: 10px;";
     const stylePre = "position: relative;max-height: 400px;overflow: scroll;width: 100%;"
@@ -168,6 +179,7 @@ const getEducationInformation = async () => {
     return educations
 }
 
+// scraping Profile
 const scrapingProfile = async () => {
 
     await autoscrollToElement('body')
@@ -192,11 +204,7 @@ const scrapingProfiles = async () => {
     const linksProfiles = Array.from(document.querySelectorAll(selectorProfiles.Linksprofiles)).map(e => e.href);
 
     // Go to first page
-    const [linkProfile, ...rest] = linksProfiles;
-    window.location.href = linkProfile;
-
-    // Save new LinksProfiles
-    window.localStorage.setItem('linksProfiles', JSON.stringify(rest));
+    goNextPage(linksProfiles);
 }
 
 //Comunication
@@ -221,27 +229,25 @@ const scrapingProfiles = async () => {
             dataProfiles = [...dataProfiles, dataProfile];
             window.localStorage.setItem('dataProfiles', JSON.stringify(dataProfiles));
 
-            // Go to next profile
-            const [linkProfile, ...rest] = linksProfiles;
-            window.location.href = linkProfile;
-
-            // Save new LinksProfiles
-            window.localStorage.setItem('linksProfiles', JSON.stringify(rest));
+            goNextPage(linksProfiles);
         }
     }
 
     if (!dataProfiles) return;
 
-    console.log(dataProfiles);
 
-    const { div, pre, button } = createPopup()
+    window.onload = () => {
+        console.log(dataProfiles);
 
-    pre.innerText = JSON.stringify(dataProfiles, null, 2)
+        const { div, pre, button } = createPopup()
 
-    button.addEventListener("click", () => {
-        //Necesito el fetch
+        pre.innerText = JSON.stringify(dataProfiles, null, 2)
 
-        div.remove()
-    })
+        button.addEventListener("click", () => {
+            //Necesito el fetch
+
+            div.remove()
+        })
+    }
 
 })();
