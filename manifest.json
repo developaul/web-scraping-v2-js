@@ -5,18 +5,26 @@
   "manifest_version": 3,
   "content_scripts": [
     {
-      "matches": ["https://www.linkedin.com/*"],
-      "js": ["./app.js"]
+      "matches": [
+        "https://www.linkedin.com/*"
+      ],
+      "js": [
+        "./app.js"
+      ]
     }
   ],
-  "action":{
-    "default_popup":"./App/index.html",
+  "action": {
+    "default_popup": "./App/index.html",
     "default_icon": {
       "32": "./App/Image/32.png",
       "48": "./App/Image/48.png"
     }
   },
-  "permissions": ["activeTab", "scripting"],
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "storage"
+  ],
   "icons": {
     "32": "./App/Image/32.png",
     "48": "./App/Image/48.png"

@@ -1,12 +1,16 @@
-let btnscrap = document.getElementById('btnscrap')
+let btnScrapProfile = document.querySelector('#btnScrapProfile'),
+    btnScrapProfiles = document.querySelector('#btnScrapProfiles');
 
-btnscrap.addEventListener('click', async ()=>{
+btnScrapProfile.addEventListener('click', async () => {
     const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
 
-    var port = chrome.tabs.connect(tab.id);
-    port.postMessage({acction: 'scraping'});
-})
+    const port = chrome.tabs.connect(tab.id);
+    port.postMessage({ acction: 'scraping profile' });
+});
 
+btnScrapProfiles.addEventListener('click', async () => {
+    const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
 
-
-
+    const port = chrome.tabs.connect(tab.id);
+    port.postMessage({ acction: 'scraping profiles' });
+});
